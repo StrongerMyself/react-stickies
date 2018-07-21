@@ -6,26 +6,38 @@ export default class Stiker extends Component  {
     state = {
         inMove: false,
         top: this.props.top,
-        left: this.props.left
+        left: this.props.left,
+        text: this.props.text,
+        onActive: this.props.onActive
     }
         
     render() {
-        let stikerClassStr = `stiker ${this.state.inMove ? 'stiker--inMove' : ''}`
+        let classStr = `stiker ${this.state.inMove ? 'stiker--inMove' : ''}`
+        let styleObj = { 
+            'top': this.state.top, 
+            'left': this.state.left
+        }
         return (
-            <div className={stikerClassStr} style={{ 'top': this.state.top, 'left': this.state.left }}>
-                <div className="stiker__head" onMouseDown={this.onDown} >
+            <div className={classStr} style={styleObj}>
+                <div className="stiker__head" onMouseDown={this.onDown}>
                     <div className="stiker__cross material-icons">close</div>
                 </div>
                 <div className="stiker__body">
-                    <textarea></textarea>
+                    <textarea value={this.state.text} onChange={this.onTextareaChange}></textarea>
                 </div>
             </div>
         )
     }
-
+    
+    onTextareaChange = (e) => {
+        this.setState({ text: e.target.value });
+    } 
+    
     onDown = (e) => {
         let parent = e.target.parentNode
         if (!parent.classList.contains('stiker')) return
+
+        this.state.onActive()
         
         this.setState({ inMove: true })
         
