@@ -1,9 +1,10 @@
 import React from 'react'
+import Stiker from './Sticker'
 
 function App() {
     return (
         <div>
-            <h1>Hello World</h1>
+            <Stiker/>
         </div>
     )
 }

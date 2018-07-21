@@ -1,0 +1,79 @@
+.stiker {
+    width: 250px;
+    height: auto;
+    background-color: #fff;
+    box-shadow: 0 0 20px 0 rgba(0,0,0,0.5)
+}
+
+.stiker__head {
+    position: relative;
+    width: 100%;
+    height: 30px;
+    background-color: #bbb;
+    user-select: none;
+}
+
+.stiker__cross {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #333;
+    cursor: pointer;
+}
+
+.stiker__body {
+    display: flex;
+    position: relative;
+    width: 100%;
+}
+
+.stiker__body::after {
+    font-family: 'Material Icons';
+    content: 'signal_cellular_4_bar';
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 10px;
+    height: 10px;
+    pointer-events: none;
+    background-color: #bbb;
+    font-size: 10px;
+    color: #555;
+}
+
+.stiker__body textarea {
+    width: 250px;
+    min-width: 250px;
+    min-height: 200px;
+    border: none;
+    outline: none;
+}
+
+.stiker__body textarea::selection {
+	background: #555;
+	color: #fff;
+	text-shadow: none;
+}
+
+.stiker__body textarea::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+.stiker__body textarea::-webkit-scrollbar {
+	width: 10px;
+    height: 10px;
+    
+}
+
+.stiker__body textarea::-webkit-scrollbar-thumb {
+	background-color: #555;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
