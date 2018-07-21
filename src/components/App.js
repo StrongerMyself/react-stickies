@@ -4,7 +4,7 @@ import Stiker from './Sticker'
 function App() {
     return (
         <div>
-            <Stiker/>
+            <Stiker top={10} left={10}/>
         </div>
     )
 }

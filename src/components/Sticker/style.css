@@ -1,8 +1,20 @@
 .stiker {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-wrap: wrap;
     width: 250px;
     height: auto;
     background-color: #fff;
-    box-shadow: 0 0 20px 0 rgba(0,0,0,0.5)
+    box-shadow: 0 0 10px 0 rgba(0,0,0,0.2);
+    transition: 0.3s box-shadow, 0.3s transform;
+}
+
+.stiker--inMove {
+    box-shadow: 0 0 30px 0 rgba(0,0,0,0.5);
+    transform: scale(1.05);
+    transform-origin: top center
 }
 
 .stiker__head {
