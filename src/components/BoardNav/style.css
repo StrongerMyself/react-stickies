@@ -1,0 +1,38 @@
+.boardNav {
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	display: flex;
+	align-items: flex-end;
+	user-select: none;
+}
+
+.boardNav li {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: #fff;
+	padding: 0 10px;
+	height: 30px;
+	font-size: 12px;
+	margin-left: 1px;
+	cursor: pointer;
+	border-top-left-radius: 20%;
+	/* border-top-right-radius: 20%; */
+}
+
+.boardNav li.active {
+	height: 40px;
+	background-color: #ccc;
+}
+
+.boardNav li:hover {
+	height: 40px;
+}
+
+.boardNav i {
+	font-size: 18px;
+}

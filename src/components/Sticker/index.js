@@ -29,6 +29,17 @@ export default class Stiker extends Component  {
         )
     }
     
+    componentWillReceiveProps(nextProps) {
+        if (this.props.text !== nextProps.text) {
+            console.log(this.state.text)
+            this.setState({
+                top: nextProps.top,
+                left: nextProps.left,
+                text: nextProps.text,
+            })
+        }
+    }
+    
     onTextareaChange = (e) => {
         this.setState({ text: e.target.value });
     } 

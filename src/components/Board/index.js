@@ -9,7 +9,7 @@ export default class Board extends Component {
     }
 
     render() {
-        const stikersList = this.state.stikers.map((item, index) =>
+        let stikersList = this.state.stikers.map((item, index) =>
             <Stiker 
                 key={item.id}
                 top={index * 240 + 10} 
@@ -24,6 +24,10 @@ export default class Board extends Component {
                 {stikersList}
             </div>
         )
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({ stikers: nextProps.stikers })
     }
     
     onStikerActive = (id) => {
