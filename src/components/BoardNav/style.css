@@ -21,8 +21,7 @@
 	font-size: 12px;
 	margin-left: 1px;
 	cursor: pointer;
-	border-top-left-radius: 20%;
-	/* border-top-right-radius: 20%; */
+	border-top-left-radius: 5px;
 }
 
 .boardNav li.active {
@@ -30,12 +29,16 @@
 	background-color: #ccc;
 }
 
+.boardNav li.active:hover {
+	height: 35px;
+}
+
 .boardNav li.active .boardNav__input.active { 
 	background-color: #ccc !important;
 }
 
 .boardNav li:hover {
-	height: 40px;
+	height: 25px;
 }
 
 .boardNav i {

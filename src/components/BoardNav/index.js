@@ -10,7 +10,11 @@ export default class BoardNav extends Component {
 
     render() {
         const boardNavList = this.state.boards.map((item, index) => 
-            <li key={item.id} className={`boardNav__item ${this.props.active === index ? 'active' : ''}`}>
+            <li 
+                key={item.id} 
+                className={`boardNav__item ${this.props.active === index ? 'active' : ''}`}
+                onClick={() => { this.props.onChangeActive(index) }}
+            >
                 <input
                     className={`boardNav__input ${this.state.editItemIndex === index ? 'active' : ''}`}
                     type="text"
@@ -20,7 +24,10 @@ export default class BoardNav extends Component {
                     onKeyDown={this.onKeyDown}
                     onBlur={this.onBlur}
                 />
-                <div className="boardNav__buffer" onDoubleClick={(e) => this.onDoubleClick(e, index)}>{this.state.boards[index].title}</div>
+                <div 
+                    className="boardNav__buffer" 
+                    onDoubleClick={(e) => this.onDoubleClick(e, index)}
+                >{this.state.boards[index].title}</div>
                 <i className="material-icons">close</i>
             </li>
         )
