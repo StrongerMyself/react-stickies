@@ -2,26 +2,34 @@ import React, { Component } from 'react'
 import Board from './Board'
 import BoardNav from './BoardNav'
 
-import data from '../data'
+import Store from '../core/Store';
 
 export default class App extends Component {
-    
-    state = {
-        data: data,
-        activeBoardIndex: 0,
+
+    constructor(props) {
+        super(props)
+        this.Store = new Store()
+        this.state = {
+            data: this.Store.getData(),
+            activeBoardIndex: 0
+        }
     }
 
     render() {
-        return  (
+        return (
             <div>
-                <Board stikers={this.state.data[this.state.activeBoardIndex].stikers} />
-                <BoardNav boards={this.state.data} onChangeBoard={this.onChangeBoard} active={this.state.activeBoardIndex} />
+                <Board data={this.state.data.boards[this.state.activeBoardIndex]} />
+                <BoardNav 
+                    boards={this.state.data.boards} 
+                    onChangeActive={this.onChangeActiveBoard} 
+                    active={this.state.activeBoardIndex} 
+                />
             </div>
         )
     }
 
-    onChangeBoard = (index) => {
-        this.setState({ activeBoardIndex: index })
+    onChangeActiveBoard = (index) => {
+        this.setState({ activeBoardIndex: index, data: this.Store.getData()})
     }
 
 }

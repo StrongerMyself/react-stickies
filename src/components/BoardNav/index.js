@@ -8,7 +8,7 @@ export default class BoardNav extends Component {
             <li 
                 key={item.id} 
                 className={this.props.active === index ? 'active' : ''}
-                onClick={this.props.onChangeBoard.bind(this, index)}
+                onClick={this.props.onChangeActive.bind(this, index)}
             >{item.title}</li> 
         )
         return (

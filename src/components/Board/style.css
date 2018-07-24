@@ -1,0 +1,22 @@
+.board {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    overflow: auto;
+}
+
+.board::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+.board::-webkit-scrollbar {
+	width: 10px;
+    height: 10px;
+}
+
+.board::-webkit-scrollbar-thumb {
+	background-color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+}

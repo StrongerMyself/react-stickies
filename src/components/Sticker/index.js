@@ -5,17 +5,17 @@ export default class Stiker extends Component  {
 
     state = {
         inMove: false,
-        top: this.props.top,
+        top:  this.props.top,
         left: this.props.left,
-        text: this.props.text,
-        onActive: this.props.onActive
+        text: this.props.text
     }
+
         
     render() {
         let classStr = `stiker ${this.state.inMove ? 'stiker--inMove' : ''}`
         let styleObj = { 
-            'top': this.state.top, 
-            'left': this.state.left
+            'top': this.state.top + 'px', 
+            'left': this.state.left + 'px'
         }
         return (
             <div className={classStr} style={styleObj}>
@@ -31,7 +31,6 @@ export default class Stiker extends Component  {
     
     componentWillReceiveProps(nextProps) {
         if (this.props.text !== nextProps.text) {
-            console.log(this.state.text)
             this.setState({
                 top: nextProps.top,
                 left: nextProps.left,
@@ -41,37 +40,52 @@ export default class Stiker extends Component  {
     }
     
     onTextareaChange = (e) => {
-        this.setState({ text: e.target.value });
+        this.setState({ 
+            text: e.target.value
+        }, () => {
+            this.props.onChangeText(
+                this.props.id, 
+                {
+                    top: this.state.top,
+                    left: this.state.left,
+                    text: this.state.text
+                }
+            )
+        })
     } 
     
     onDown = (e) => {
         let parent = e.target.parentNode
         if (!parent.classList.contains('stiker')) return
 
-        this.state.onActive()
-        
+        this.props.onMoveStart()
         this.setState({ inMove: true })
         
-        let offsetTop = e.pageY - parent.offsetTop 
+        let offsetTop  = e.pageY - parent.offsetTop 
         let offsetLeft = e.pageX - parent.offsetLeft 
         
         let _this = this
         function onMove(e) {
             _this.setState({
-                top: e.pageY - offsetTop + 'px',
-                left: e.pageX - offsetLeft + 'px'
+                top:  e.pageY - offsetTop,
+                left: e.pageX - offsetLeft 
             })
         }
         
         onMove(e)
+        document.onmousemove = (e) => onMove(e)
         
-        document.onmousemove = function (e) {
-            onMove(e)
-        }
-        
-        e.target.onmouseup = function () {
+        e.target.onmouseup = () => {
             document.onmousemove = null
-            _this.setState({ inMove: false })
+            _this.setState({ 
+                inMove: false
+            }, () => {
+                _this.props.onMoveEnd({ 
+                    top: _this.state.top, 
+                    left: _this.state.left,
+                    text: _this.state.text
+                })
+            })
         }
     }
 
