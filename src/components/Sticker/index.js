@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import './style.css'
 
-export default class Stiker extends Component  {
+export default class Sticker extends Component  {
 
     state = {
         inMove: false,
@@ -12,17 +12,17 @@ export default class Stiker extends Component  {
 
         
     render() {
-        let classStr = `stiker ${this.state.inMove ? 'stiker--inMove' : ''}`
+        let classStr = `sticker ${this.state.inMove ? 'sticker--inMove' : ''}`
         let styleObj = { 
             'top': this.state.top + 'px', 
             'left': this.state.left + 'px'
         }
         return (
             <div className={classStr} style={styleObj}>
-                <div className="stiker__head" onMouseDown={this.onDown}>
-                    <div className="stiker__cross material-icons" onClick={this.onRemove}>close</div>
+                <div className="sticker__head" onMouseDown={this.onDown}>
+                    <div className="sticker__cross material-icons" onClick={this.onRemove}>close</div>
                 </div>
-                <div className="stiker__body">
+                <div className="sticker__body">
                     <textarea 
                         value={this.state.text} 
                         onChange={this.onTextareaChange}
@@ -60,7 +60,7 @@ export default class Stiker extends Component  {
     
     onDown = (e) => {
         let parent = e.target.parentNode
-        if (!parent.classList.contains('stiker')) return
+        if (!parent.classList.contains('sticker')) return
 
         this.props.onMoveStart()
         this.setState({ inMove: true })
@@ -94,7 +94,7 @@ export default class Stiker extends Component  {
     }
 
     onRemove = (e) => {
-        if (!e.target.classList.contains('stiker__cross')) return
+        if (!e.target.classList.contains('sticker__cross')) return
         this.props.onRemove(this.props.id)
     }
 

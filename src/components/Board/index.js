@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Stiker from '../Sticker'
+import Sticker from '../Sticker'
 import './style.css'
 
 import Store from '../../core/Store'
@@ -10,14 +10,14 @@ export default class Board extends Component {
         super(props)
         this.Store = new Store()
         this.state = {
-            stikers: props.data.stikers
+            stickers: props.data.stickers
         }
     }
 
 
     render() {
-        let stikersList = this.state.stikers.map((item, index) =>
-            <Stiker 
+        let stickersList = this.state.stickers.map((item, index) =>
+            <Sticker 
                 key={item.id}  
                               
                 id={item.id}
@@ -33,42 +33,42 @@ export default class Board extends Component {
         )
         return (
             <div className="board" onClick={this.onStickerAdd}>
-                {stikersList}
+                {stickersList}
             </div>
         )
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState({ stikers: nextProps.data.stikers })
+        this.setState({ stickers: nextProps.data.stickers })
     }
     
     onStickerMoveStart = (id) => {
-        let s = Object.assign([], this.state.stikers)
+        let s = Object.assign([], this.state.stickers)
         let index = s.findIndex(el => el.id === id)
         s.push(s.splice(index, 1)[0])
-        this.setState({ stikers: s })
+        this.setState({ stickers: s })
     }
     
     onStickerMoveEnd = (data) => {
-        let s = Object.assign([], this.state.stikers)
+        let s = Object.assign([], this.state.stickers)
         s[s.length - 1].top = data.top 
         s[s.length - 1].left = data.left 
         s[s.length - 1].text = data.text 
         this.setState({ 
-            stikers: s 
+            stickers: s 
         }, () => {
             this.Store.onSaveStickers(this.props.data.id, s)
         })
     }
     
     onStickerChangeText = (id, data) => {
-        let s = Object.assign([], this.state.stikers)
+        let s = Object.assign([], this.state.stickers)
         let index = s.findIndex(el => el.id === id)
         s[index].top = data.top
         s[index].left = data.left
         s[index].text = data.text 
         this.setState({
-            stikers: s
+            stickers: s
         }, () => {
             this.Store.onSaveSticker(id, this.props.data.id, data)
         })
@@ -77,7 +77,7 @@ export default class Board extends Component {
     onStickerAdd = (e) => {
         if (!e.target.classList.contains('board')) return
         this.setState({ 
-            stikers: this.Store.onAddSticker(
+            stickers: this.Store.onAddSticker(
                 this.props.data.id,
                 {
                     id: null,
@@ -89,7 +89,7 @@ export default class Board extends Component {
         })
     }
 
-    onStickerRemove = (stickerId) => this.setState({ stikers: this.Store.onRemoveSticker(this.props.data.id, stickerId) })
+    onStickerRemove = (stickerId) => this.setState({ stickers: this.Store.onRemoveSticker(this.props.data.id, stickerId) })
 
 
 }

@@ -19,7 +19,7 @@ export default class Store {
         this.getData()
 
         let indexBoard = this.data.boards.findIndex(el => el.id === boardId)
-        this.data.boards[indexBoard].stikers = stickers
+        this.data.boards[indexBoard].stickers = stickers
         
         localStorage.stickiesStore = JSON.stringify(this.data)
     }
@@ -28,11 +28,11 @@ export default class Store {
         this.getData()
         
         let indexBoard   = this.data.boards.findIndex(el => el.id === boardId),
-            indexSticker = this.data.boards[indexBoard].stikers.findIndex(el => el.id === stickerId)
+            indexSticker = this.data.boards[indexBoard].stickers.findIndex(el => el.id === stickerId)
 
-        this.data.boards[indexBoard].stikers[indexSticker].top  = data.top
-        this.data.boards[indexBoard].stikers[indexSticker].left = data.left
-        this.data.boards[indexBoard].stikers[indexSticker].text = data.text
+        this.data.boards[indexBoard].stickers[indexSticker].top  = data.top
+        this.data.boards[indexBoard].stickers[indexSticker].left = data.left
+        this.data.boards[indexBoard].stickers[indexSticker].text = data.text
 
         localStorage.stickiesStore = JSON.stringify(this.data)
     }
@@ -42,26 +42,26 @@ export default class Store {
         
         let indexBoard = this.data.boards.findIndex(el => el.id === boardId)
         let id = 0
-        this.data.boards[indexBoard].stikers.forEach(item => { if (+item.id > id) id = +item.id })
+        this.data.boards[indexBoard].stickers.forEach(item => { if (+item.id > id) id = +item.id })
         obj.id = id + 1
-        this.data.boards[indexBoard].stikers.push(obj)
+        this.data.boards[indexBoard].stickers.push(obj)
         
         localStorage.stickiesStore = JSON.stringify(this.data)
         
-        return this.data.boards[indexBoard].stikers
+        return this.data.boards[indexBoard].stickers
     }
     
     onRemoveSticker(boardId, stickerId) {
         this.getData()
 
         let indexBoard = this.data.boards.findIndex(el => el.id === boardId),
-            indexSticker = this.data.boards[indexBoard].stikers.findIndex(el => el.id === stickerId)
+            indexSticker = this.data.boards[indexBoard].stickers.findIndex(el => el.id === stickerId)
 
-        this.data.boards[indexBoard].stikers.splice(indexSticker, 1)
+        this.data.boards[indexBoard].stickers.splice(indexSticker, 1)
         
         localStorage.stickiesStore = JSON.stringify(this.data)
 
-        return this.data.boards[indexBoard].stikers
+        return this.data.boards[indexBoard].stickers
     }
 
     addBoard(obj) {}
