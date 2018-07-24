@@ -21,15 +21,32 @@ export default class App extends Component {
                 <Board data={this.state.data.boards[this.state.activeBoardIndex]} />
                 <BoardNav 
                     boards={this.state.data.boards} 
-                    onChangeActive={this.onChangeActiveBoard} 
                     active={this.state.activeBoardIndex} 
+                    onChangeActive={this.onBoardChangeActive} 
+                    onAdd={this.onBoardAdd} 
+                    onRemove={this.onBoardRemove} 
+                    onSave={this.onBoardSave} 
                 />
             </div>
         )
     }
 
-    onChangeActiveBoard = (index) => {
+    onBoardChangeActive = (index) => {
         this.setState({ activeBoardIndex: index, data: this.Store.getData()})
+    }
+
+    onBoardAdd = () => {
+        // if (this.state.data.boards[this.state.data.boards.length - 1].title.length > 0) {
+            this.setState({ data: this.Store.onAddBoard(), activeBoardIndex: this.state.data.boards.length })
+        // }
+    }
+
+    onBoardRemove = (id) => {
+        this.setState({ data: this.Store.onRemoveBoard(id), activeBoardIndex: 0 })
+    }
+
+    onBoardSave = (id, obj) => {
+        this.setState({ data: this.Store.onSaveBoard(id, obj) })
     }
 
 }

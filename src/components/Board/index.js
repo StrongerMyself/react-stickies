@@ -39,7 +39,9 @@ export default class Board extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState({ stickers: nextProps.data.stickers })
+        if (nextProps.data) {
+            this.setState({ stickers: nextProps.data.stickers })
+        }
     }
     
     onStickerMoveStart = (id) => {

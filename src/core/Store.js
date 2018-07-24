@@ -3,7 +3,7 @@ import exampleStore from './example.store.js'
 export default class Store {
 
     constructor() {
-        this.data = JSON.parse(localStorage.getItem('stickiesStore')) || Object.assign({}, exampleStore);
+        this.data = JSON.parse(localStorage.getItem('stickiesStore')) || JSON.parse(JSON.stringify(exampleStore));
     }
     
     saveData() {
@@ -11,8 +11,12 @@ export default class Store {
     }
 
     getData() {
-        this.data = JSON.parse(localStorage.getItem('stickiesStore')) || Object.assign({}, exampleStore);
+        this.data = JSON.parse(localStorage.getItem('stickiesStore')) || JSON.parse(JSON.stringify(exampleStore));
         return this.data
+    }
+
+    getBoardTemplate() {
+        return JSON.parse(JSON.stringify(exampleStore.boards[0]))
     }
 
     onSaveStickers(boardId, stickers) {
@@ -47,7 +51,6 @@ export default class Store {
         this.data.boards[indexBoard].stickers.push(obj)
         
         localStorage.stickiesStore = JSON.stringify(this.data)
-        
         return this.data.boards[indexBoard].stickers
     }
     
@@ -60,13 +63,44 @@ export default class Store {
         this.data.boards[indexBoard].stickers.splice(indexSticker, 1)
         
         localStorage.stickiesStore = JSON.stringify(this.data)
-
         return this.data.boards[indexBoard].stickers
     }
 
-    addBoard(obj) {}
+    onSaveBoard(boardId, obj) {
+        this.getData()
 
-    removeBoard(id) {}
+        let indexBoard = this.data.boards.findIndex(el => el.id === boardId)
+        this.data.boards[indexBoard].title = obj.title
+        
+        localStorage.stickiesStore = JSON.stringify(this.data)
+        return this.data
+    }
+
+    onAddBoard() {
+        this.getData()
+
+        let obj = this.getBoardTemplate()
+        this.data.boards.forEach(item => { if (+item.id > +obj.id) obj.id = +item.id })
+        obj.id++
+        this.data.boards.push(obj)
+
+        localStorage.stickiesStore = JSON.stringify(this.data)
+        return this.data
+    }
+
+    onRemoveBoard(boardId) {
+        this.getData()
+        
+        let indexBoard = this.data.boards.findIndex(el => el.id === boardId)
+        this.data.boards.splice(indexBoard, 1)
+        if (!this.data.boards.length) {
+            this.data.boards.push(this.getBoardTemplate())
+            this.data.boards[0].id = 1
+        }
+
+        localStorage.stickiesStore = JSON.stringify(this.data)
+        return this.data
+    }
 
 
 }

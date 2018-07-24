@@ -21,26 +21,31 @@ export default class BoardNav extends Component {
                     value={this.state.boards[index].title}
                     placeholder="Enter the title..."
                     onChange={(e) => this.onInput(e, index)}
-                    onKeyDown={this.onKeyDown}
-                    onBlur={this.onBlur}
+                    onKeyDown={(e) => this.onKeyDown(e, index)}
+                    onBlur={() => this.onBlur(index)}
                 />
                 <div 
                     className="boardNav__buffer" 
                     onDoubleClick={(e) => this.onDoubleClick(e, index)}
                 >{this.state.boards[index].title}</div>
-                <i className="material-icons">close</i>
+                <i className="material-icons" onClick={() => this.props.onRemove(item.id)}>close</i>
             </li>
         )
         return (
             <ul className="boardNav">
                 {boardNavList}
-                <li><i className="material-icons">add</i></li>
+                <li><i className="material-icons" onClick={this.props.onAdd}>add</i></li>
             </ul>
         )
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.setState({ boards: nextProps.boards })
+    }
+
     onDoubleClick = (e, index) => {
-        let input = e.target.parentNode.getElementsByClassName('boardNav__input')[0]
+        // let input = e.target.parentNode.getElementsByClassName('boardNav__input')[0]
+        let input = e.target.previousSibling
         this.setState({ 
             editItemIndex: index 
         }, () => {
@@ -48,13 +53,18 @@ export default class BoardNav extends Component {
         })
     }
 
-    onBlur = () => {
-        this.setState({ editItemIndex: null })
+    onBlur = (index) => {
+        this.setState({ 
+            editItemIndex: null
+        }, () => {
+            this.props.onSave(this.state.boards[index].id, { title : this.state.boards[index].title })
+        })
     }
     
-    onKeyDown = (e) => {
+    onKeyDown = (e, index) => {
         if (e.key === 'Enter') {
-            e.target.blur()
+            this.onBlur(index)
+            // e.target.blur()
         }
     }
 
