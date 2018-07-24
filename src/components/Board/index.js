@@ -28,6 +28,7 @@ export default class Board extends Component {
                 onMoveStart={this.onStickerMoveStart.bind(this, item.id)}
                 onMoveEnd={this.onStickerMoveEnd}
                 onChangeText={this.onStickerChangeText}
+                onRemove={this.onStickerRemove}
             />
         )
         return (
@@ -87,6 +88,8 @@ export default class Board extends Component {
             )
         })
     }
+
+    onStickerRemove = (stickerId) => this.setState({ stikers: this.Store.onRemoveSticker(this.props.data.id, stickerId) })
 
 
 }

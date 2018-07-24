@@ -47,6 +47,19 @@ export default class Store {
         this.data.boards[indexBoard].stikers.push(obj)
         
         localStorage.stickiesStore = JSON.stringify(this.data)
+        
+        return this.data.boards[indexBoard].stikers
+    }
+    
+    onRemoveSticker(boardId, stickerId) {
+        this.getData()
+
+        let indexBoard = this.data.boards.findIndex(el => el.id === boardId),
+            indexSticker = this.data.boards[indexBoard].stikers.findIndex(el => el.id === stickerId)
+
+        this.data.boards[indexBoard].stikers.splice(indexSticker, 1)
+        
+        localStorage.stickiesStore = JSON.stringify(this.data)
 
         return this.data.boards[indexBoard].stikers
     }
@@ -54,7 +67,6 @@ export default class Store {
     addBoard(obj) {}
 
     removeBoard(id) {}
-    removeSticker(id) {}
 
 
 }

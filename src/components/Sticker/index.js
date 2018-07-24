@@ -20,7 +20,7 @@ export default class Stiker extends Component  {
         return (
             <div className={classStr} style={styleObj}>
                 <div className="stiker__head" onMouseDown={this.onDown}>
-                    <div className="stiker__cross material-icons">close</div>
+                    <div className="stiker__cross material-icons" onClick={this.onRemove}>close</div>
                 </div>
                 <div className="stiker__body">
                     <textarea 
@@ -91,6 +91,11 @@ export default class Stiker extends Component  {
                 })
             })
         }
+    }
+
+    onRemove = (e) => {
+        if (!e.target.classList.contains('stiker__cross')) return
+        this.props.onRemove(this.props.id)
     }
 
 }
