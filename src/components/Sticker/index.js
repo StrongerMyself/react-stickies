@@ -89,7 +89,6 @@ export default class Sticker extends Component  {
         
         let _this = this
         function onMove(e) {
-            console.log(e.clientY, e.pageY, e.screenY)
             _this.setState({
                 top:  e.screenY - offsetTop,
                 left: e.screenX - offsetLeft 

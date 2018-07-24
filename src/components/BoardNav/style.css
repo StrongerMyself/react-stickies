@@ -11,6 +11,7 @@
 }
 
 .boardNav li {
+	position: relative;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -29,10 +30,43 @@
 	background-color: #ccc;
 }
 
+.boardNav li.active .boardNav__input.active { 
+	background-color: #ccc !important;
+}
+
 .boardNav li:hover {
 	height: 40px;
 }
 
 .boardNav i {
 	font-size: 18px;
+}
+
+.boardNav__buffer,
+.boardNav__input {
+	font-family: Arial, Verdana, sans-serif;
+	font-size: 12px;
+	letter-spacing: 0.05em;
+	margin-left: 10px;
+}
+
+.boardNav__input {
+	padding: 5px 10px;
+	border: none;
+	position: absolute;
+    background: #fff;
+    left: 0;
+    top: 50%;
+	transform: translateY(-50%);
+	width: calc(100% - 40px);
+	display: none;
+}
+
+.boardNav__input.active {
+	display: block;
+}
+
+.boardNav__buffer {
+	white-space: nowrap;
+	padding-right: 15px;
 }
