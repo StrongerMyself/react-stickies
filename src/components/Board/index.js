@@ -83,7 +83,7 @@ export default class Board extends Component {
                     id: null,
                     text: '',
                     top: e.pageY - 15,
-                    left: e.pageX - 15,
+                    left: e.pageX - 125,
                 }
             )
         })

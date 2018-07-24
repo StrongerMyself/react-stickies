@@ -14,6 +14,7 @@ export default class BoardNav extends Component {
         return (
             <ul className="boardNav">
                 {boardNavList}
+                <li><input /></li>
                 <li><i className="material-icons">add</i></li>
             </ul>
         )

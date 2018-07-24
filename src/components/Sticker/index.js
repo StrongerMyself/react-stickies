@@ -26,6 +26,8 @@ export default class Sticker extends Component  {
                     <textarea 
                         value={this.state.text} 
                         onChange={this.onTextareaChange}
+                        onFocus={this.onTextareaFocus}
+                        onBlur={this.onTextareaBlur}
                         placeholder="Write something ..."
                     ></textarea>
                 </div>
@@ -41,6 +43,23 @@ export default class Sticker extends Component  {
                 text: nextProps.text,
             })
         }
+    }
+
+    onTextareaFocus = (e) => {
+        this.props.onMoveStart()
+        this.setState({ inMove: true })
+    }
+
+    onTextareaBlur = (e) => {
+        this.setState({ 
+            inMove: false 
+        }, () => {
+            this.props.onMoveEnd({
+                top:  this.state.top,
+                left: this.state.left,
+                text: this.state.text
+            })
+        })
     }
     
     onTextareaChange = (e) => {
@@ -65,14 +84,15 @@ export default class Sticker extends Component  {
         this.props.onMoveStart()
         this.setState({ inMove: true })
         
-        let offsetTop  = e.pageY - parent.offsetTop 
-        let offsetLeft = e.pageX - parent.offsetLeft 
+        let offsetTop  = e.screenY - parent.offsetTop 
+        let offsetLeft = e.screenX - parent.offsetLeft 
         
         let _this = this
         function onMove(e) {
+            console.log(e.clientY, e.pageY, e.screenY)
             _this.setState({
-                top:  e.pageY - offsetTop,
-                left: e.pageX - offsetLeft 
+                top:  e.screenY - offsetTop,
+                left: e.screenX - offsetLeft 
             })
         }
         
