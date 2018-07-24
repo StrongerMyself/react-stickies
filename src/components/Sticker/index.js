@@ -23,7 +23,11 @@ export default class Stiker extends Component  {
                     <div className="stiker__cross material-icons">close</div>
                 </div>
                 <div className="stiker__body">
-                    <textarea value={this.state.text} onChange={this.onTextareaChange}></textarea>
+                    <textarea 
+                        value={this.state.text} 
+                        onChange={this.onTextareaChange}
+                        placeholder="Write something ..."
+                    ></textarea>
                 </div>
             </div>
         )

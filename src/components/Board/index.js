@@ -31,7 +31,7 @@ export default class Board extends Component {
             />
         )
         return (
-            <div className="board">
+            <div className="board" onClick={this.onStickerAdd}>
                 {stikersList}
             </div>
         )
@@ -72,4 +72,21 @@ export default class Board extends Component {
             this.Store.onSaveSticker(id, this.props.data.id, data)
         })
     }
+
+    onStickerAdd = (e) => {
+        if (!e.target.classList.contains('board')) return
+        this.setState({ 
+            stikers: this.Store.onAddSticker(
+                this.props.data.id,
+                {
+                    id: null,
+                    text: '',
+                    top: e.pageY - 15,
+                    left: e.pageX - 15,
+                }
+            )
+        })
+    }
+
+
 }

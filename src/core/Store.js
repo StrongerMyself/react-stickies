@@ -37,4 +37,24 @@ export default class Store {
         localStorage.stickiesStore = JSON.stringify(this.data)
     }
 
+    onAddSticker(boardId, obj) {
+        this.getData()
+        
+        let indexBoard = this.data.boards.findIndex(el => el.id === boardId)
+        let id = 0
+        this.data.boards[indexBoard].stikers.forEach(item => { if (+item.id > id) id = +item.id })
+        obj.id = id + 1
+        this.data.boards[indexBoard].stikers.push(obj)
+        
+        localStorage.stickiesStore = JSON.stringify(this.data)
+
+        return this.data.boards[indexBoard].stikers
+    }
+
+    addBoard(obj) {}
+
+    removeBoard(id) {}
+    removeSticker(id) {}
+
+
 }
