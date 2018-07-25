@@ -37,6 +37,7 @@ export default class Store {
         this.data.boards[indexBoard].stickers[indexSticker].top  = data.top
         this.data.boards[indexBoard].stickers[indexSticker].left = data.left
         this.data.boards[indexBoard].stickers[indexSticker].text = data.text
+        this.data.boards[indexBoard].stickers[indexSticker].themeId = data.themeId
 
         localStorage.stickiesStore = JSON.stringify(this.data)
     }

@@ -7,23 +7,45 @@ export default class Sticker extends Component  {
         inMove: false,
         top:  this.props.top,
         left: this.props.left,
-        text: this.props.text
+        text: this.props.text,
+        themeId: this.props.themeId,
+        navOpen: false
     }
 
         
     render() {
+        let theme = this.props.themes.find(el => +el.id === +this.state.themeId)
+
         let classStr = `sticker ${this.state.inMove ? 'sticker--inMove' : ''}`
         let styleObj = { 
             'top': this.state.top + 'px', 
             'left': this.state.left + 'px'
         }
+
+        const colorList = this.props.themes.map((item, index) => 
+            <li 
+                key={item.id}
+                style={{ backgroundColor: item.colors.thumb }} 
+                className={this.state.themeId === item.id ? 'active' : ''} 
+                onClick={() => this.onSelecColor(item.id)}
+            ></li>
+        )
+
         return (
             <div className={classStr} style={styleObj}>
-                <div className="sticker__head" onMouseDown={this.onDown}>
-                    <div className="sticker__cross material-icons" onClick={this.onRemove}>close</div>
+                <div 
+                    style={{ backgroundColor: theme.colors.head, color: theme.colors.icon }} 
+                    className="sticker__head" 
+                    onMouseDown={this.onDown}
+                >
+                    <i className="material-icons sticker__menuBtn" onClick={this.onToggleMenu}>more_horiz</i>
+                    <i className="material-icons sticker__crossBtn" onClick={this.onRemove}>close</i>
                 </div>
-                <div className="sticker__body">
-                    <textarea 
+                <div className={`sticker__nav ${this.state.navOpen ? 'active': ''}`}>
+                    <ul className="sticker__color">{colorList}</ul>
+                </div>
+                <div className="sticker__body" style={{ backgroundColor: theme.colors.body, color: theme.colors.text }}>
+                    <textarea
                         value={this.state.text} 
                         onChange={this.onTextareaChange}
                         onFocus={this.onTextareaFocus}
@@ -36,13 +58,15 @@ export default class Sticker extends Component  {
     }
     
     componentWillReceiveProps(nextProps) {
-        if (this.props.text !== nextProps.text) {
+        // if (this.props.text !== nextProps.text) {
             this.setState({
                 top: nextProps.top,
                 left: nextProps.left,
                 text: nextProps.text,
+                themeId: nextProps.themeId,
+                navOpen: false
             })
-        }
+        // }
     }
 
     onTextareaFocus = (e) => {
@@ -57,7 +81,8 @@ export default class Sticker extends Component  {
             this.props.onMoveEnd({
                 top:  this.state.top,
                 left: this.state.left,
-                text: this.state.text
+                text: this.state.text,
+                themeId: this.state.themeId
             })
         })
     }
@@ -71,7 +96,8 @@ export default class Sticker extends Component  {
                 {
                     top: this.state.top,
                     left: this.state.left,
-                    text: this.state.text
+                    text: this.state.text,
+                    themeId: this.state.themeId
                 }
             )
         })
@@ -106,15 +132,39 @@ export default class Sticker extends Component  {
                 _this.props.onMoveEnd({ 
                     top: _this.state.top, 
                     left: _this.state.left,
-                    text: _this.state.text
+                    text: _this.state.text,
+                    themeId: _this.state.themeId
                 })
             })
         }
     }
 
     onRemove = (e) => {
-        if (!e.target.classList.contains('sticker__cross')) return
+        if (!e.target.classList.contains('sticker__crossBtn')) return
         this.props.onRemove(this.props.id)
+    }
+
+    onToggleMenu = (e) => {
+        let n = !this.state.navOpen
+        this.setState({ navOpen: n })
+        // let nav = e.target.parentNode.parentNode.getElementsByClassName('sticker__nav')[0]
+        // nav.classList.contains('active') ? nav.classList.remove('active') : nav.classList.add('active')
+    }
+
+    onSelecColor = (themeId) => {
+        this.setState({ 
+            themeId 
+        }, () => {
+            this.props.onSelectColor(
+                this.props.id,
+                {
+                    top: this.state.top,
+                    left: this.state.left,
+                    text: this.state.text,
+                    themeId
+                }
+            )
+        })
     }
 
 }

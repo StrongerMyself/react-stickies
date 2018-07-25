@@ -9,6 +9,7 @@
     background-color: #fff;
     box-shadow: 0 0 10px 0 rgba(0,0,0,0.2);
     transition: 0.3s box-shadow;
+    z-index: 1;
 }
 
 .sticker--inMove {
@@ -23,12 +24,12 @@
     height: 30px;
     background-color: #bbb;
     user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 3;
 }
-
-.sticker__cross {
-    position: absolute;
-    top: 0;
-    right: 0;
+.sticker__head i{
     width: 30px;
     height: 30px;
     display: flex;
@@ -38,10 +39,72 @@
     cursor: pointer;
 }
 
+.sticker__nav {
+    position: absolute;
+    top: 30px;
+    left: 0;
+    width: 100%;
+    height: 0;
+    /* height: calc(100% - 30px); */
+    background-color: #eee;
+    z-index: 2;
+    overflow: hidden;
+    transition: 0.3s all;
+    transform: translateY(-30px)
+}
+
+.sticker__nav.active {
+    height: calc(100% - 30px);
+    transform: translateY(0);
+    box-shadow: 0 0 10px 0 rgba(0,0,0,0.2);
+}
+
+.sticker__color {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.sticker__color li {
+    border-radius: 100%;
+    width: 30px;
+    height: 30px;
+    background-color: #000;
+    margin: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sticker__color li::after {
+    font-family: 'Material Icons';
+    content: 'check';
+    opacity: 0;
+    transform: translateY(10px);
+    transition: 0.3s all;
+    color: #eee;
+}
+
+.sticker__color li.active::after {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.sticker__color li:hover {
+    box-shadow: 0 0 10px 0 rgba(0,0,0,0.5);
+}
+
 .sticker__body {
     display: flex;
     position: relative;
     width: 100%;
+    background-color: #fff;
+    color: #000;
 }
 
 .sticker__body::after {
@@ -54,7 +117,7 @@
     width: 10px;
     height: 10px;
     pointer-events: none;
-    background-color: #fff;
+    background-color: inherit;
     font-size: 10px;
     color: #555;
 }
@@ -66,6 +129,8 @@
     border: none;
     outline: none;
     padding: 10px;
+    color: inherit;
+    background-color: transparent;
 }
 
 .sticker__body textarea::selection {

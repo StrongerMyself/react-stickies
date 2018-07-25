@@ -10,7 +10,7 @@ export default class Board extends Component {
         super(props)
         this.Store = new Store()
         this.state = {
-            stickers: props.data.stickers
+            stickers: props.data.stickers,
         }
     }
 
@@ -24,11 +24,14 @@ export default class Board extends Component {
                 top={item.top || index * 240 + 10} 
                 left={item.left || 10} 
                 text={item.text}
+                themeId={item.themeId}
+                themes={this.Store.data.stickerThemes}
                 
                 onMoveStart={this.onStickerMoveStart.bind(this, item.id)}
                 onMoveEnd={this.onStickerMoveEnd}
                 onChangeText={this.onStickerChangeText}
                 onRemove={this.onStickerRemove}
+                onSelectColor={this.onStickerSelectColor}
             />
         )
         return (
@@ -45,17 +48,18 @@ export default class Board extends Component {
     }
     
     onStickerMoveStart = (id) => {
-        let s = Object.assign([], this.state.stickers)
+        let s = JSON.parse(JSON.stringify(this.state.stickers))
         let index = s.findIndex(el => el.id === id)
         s.push(s.splice(index, 1)[0])
         this.setState({ stickers: s })
     }
     
     onStickerMoveEnd = (data) => {
-        let s = Object.assign([], this.state.stickers)
+        let s = JSON.parse(JSON.stringify(this.state.stickers))
         s[s.length - 1].top = data.top 
         s[s.length - 1].left = data.left 
         s[s.length - 1].text = data.text 
+        s[s.length - 1].themeId = data.themeId 
         this.setState({ 
             stickers: s 
         }, () => {
@@ -64,11 +68,26 @@ export default class Board extends Component {
     }
     
     onStickerChangeText = (id, data) => {
-        let s = Object.assign([], this.state.stickers)
+        let s = JSON.parse(JSON.stringify(this.state.stickers))
         let index = s.findIndex(el => el.id === id)
         s[index].top = data.top
         s[index].left = data.left
         s[index].text = data.text 
+        s[index].themeId = data.themeId
+        this.setState({
+            stickers: s
+        }, () => {
+            this.Store.onSaveSticker(id, this.props.data.id, data)
+        })
+    }
+
+    onStickerSelectColor = (id, data) => {
+        let s = JSON.parse(JSON.stringify(this.state.stickers))
+        let index = s.findIndex(el => el.id === id)
+        s[index].top = data.top
+        s[index].left = data.left
+        s[index].text = data.text 
+        s[index].themeId = data.themeId
         this.setState({
             stickers: s
         }, () => {
@@ -83,9 +102,10 @@ export default class Board extends Component {
                 this.props.data.id,
                 {
                     id: null,
-                    text: '',
+                    themeId: 1,
                     top: e.pageY - 15,
                     left: e.pageX - 125,
+                    text: '',
                 }
             )
         })
